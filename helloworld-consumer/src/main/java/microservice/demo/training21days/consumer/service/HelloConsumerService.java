@@ -1,6 +1,7 @@
 package microservice.demo.training21days.consumer.service;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
@@ -10,7 +11,9 @@ import org.apache.servicecomb.provider.springmvc.reference.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import microservice.demo.training21days.provider.service.GreetingResponse;
 import microservice.demo.training21days.provider.service.HelloService;
+import microservice.demo.training21days.provider.service.Person;
 
 @RestSchema(schemaId = "helloConsumer")
 @Path("/consumer/v0")  // 这里使用JAX-RS风格开发的consumer服务
@@ -37,5 +40,11 @@ public class HelloConsumerService {
     ResponseEntity<String> responseEntity =
         restTemplate.getForEntity("cse://provider/provider/v0/hello/" + name, String.class);
     return responseEntity.getBody();
+  }
+
+  @Path("/greeting")
+  @POST
+  public GreetingResponse greeting(Person person) {
+    return helloService.greeting(person);
   }
 }

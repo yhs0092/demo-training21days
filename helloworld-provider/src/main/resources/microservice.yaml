@@ -5,17 +5,18 @@ service_description:
 cse:
   service:
     registry:
-      address: https://cse.cn-north-1.myhuaweicloud.com:443
+      address: http://127.0.0.1:30100
       instance:
-        watch: false        # 使用pull模式连接服务中心
+        watch: false
   config:
     client:
-      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
-      refreshMode: 1        # 使用pull模式连接配置中心
+      serverUri: http://127.0.0.1:30113
+      refreshMode: 1
       refresh_interval: 5000
-  monitor:                  # 只有从本地接入云上CSE时需要配置monitor地址，云上集群部署时可以通过服务发现接入monitor
+  monitor:
     client:
       serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+      enabled: false
   rest:
     address: 0.0.0.0:8080   # 本服务监听的地址
 

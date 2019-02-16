@@ -2,6 +2,7 @@ APPLICATION_ID: Training21Days-HelloWorld  # 应用Id 是微服务的一个隔�
 service_description:
   name: provider            # 微服务名称，同应用下的不同微服务需要有不同的名称
   version: 0.0.1            # 微服务版本
+  environment: development  # 设置为开发环境
 cse:
   service:
     registry:

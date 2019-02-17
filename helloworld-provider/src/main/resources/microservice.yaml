@@ -25,3 +25,6 @@ cse:
     secretKey: your sk   # 配置你的SK
     project: cn-north-1  # 这里的值与sc/cc/monitor的地址相对应，如果配置的是域名，CSEJavaSDK可以自动截取出project
     akskCustomCipher: default
+
+hello:
+  sayHelloPrefix: "Hello "

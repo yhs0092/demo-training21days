@@ -26,5 +26,9 @@ cse:
     project: cn-north-1  # 这里的值与sc/cc/monitor的地址相对应，如果配置的是域名，CSEJavaSDK可以自动截取出project
     akskCustomCipher: default
 
+  accesslog:
+    enabled: true
+    pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+
 hello:
   sayHelloPrefix: "Hello "

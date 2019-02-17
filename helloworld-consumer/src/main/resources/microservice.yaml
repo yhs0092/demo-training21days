@@ -19,6 +19,10 @@ cse:
   rest:
     address: 0.0.0.0:9090
 
+  accesslog:
+    enabled: true
+    pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+
   credentials:
     accessKey: your ak
     secretKey: your sk

@@ -19,6 +19,12 @@ cse:
   rest:
     address: 0.0.0.0:8080   # 本服务监听的地址
 
+  # 处理链配置
+  handler:
+    chain:
+      Provider:
+        default: demo-handler,qps-flowcontrol-provider,bizkeeper-provider
+
   # 本地连接华为云时需要配置AK/SK，如果是在云上ServiceStage部署则不需要。直接删掉credentials配置即可
   credentials:
     accessKey: your ak   # 配置你的AK

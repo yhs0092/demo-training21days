@@ -2,6 +2,7 @@ package microservice.demo.training21days.provider.service;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.servicecomb.provider.rest.common.RestSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,9 @@ public class HelloService {
 
   @PostMapping(path = "/greeting")
   public GreetingResponse greeting(@RequestBody Person person) {
+    if (StringUtils.isEmpty(person.getName()) || null == person.getGender()) {
+      throw new IllegalArgumentException("Lack of property");
+    }
     GreetingResponse greetingResponse = new GreetingResponse();
 
     if (Gender.MALE.equals(person.getGender())) {

@@ -9,6 +9,10 @@ import org.apache.servicecomb.swagger.invocation.exception.CommonExceptionData;
 import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
 
 public class DemoHandler implements Handler {
+
+  HttpServerFilter filter;
+  HttpClientFilter clientFilter;
+
   @Override
   public void handle(Invocation invocation, AsyncResponse asyncResp) throws Exception {
     // 从这里可以取出本次请求调用的方法的完整名字，格式是 serviceName.schemaId.operationId

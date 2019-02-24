@@ -17,7 +17,8 @@ public class DemoHandler implements Handler {
     if ("provider.hello.sayHello".equals(operationName)) {
       Object name = invocation.getSwaggerArgument(0);
       // 如果name=stranger，则拒绝请求，返回403
-      if ("stranger".equalsIgnoreCase((String) name)) {
+      if (!"true".equalsIgnoreCase(invocation.getContext("LetStrangerPass"))
+          && "stranger".equalsIgnoreCase((String) name)) {
         asyncResp.producerFail(new InvocationException(Status.FORBIDDEN, new CommonExceptionData("Don't know you :(")));
         return;
       }

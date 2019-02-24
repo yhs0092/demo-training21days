@@ -1,1 +1,2 @@
 microservice.demo.training21days.edge.filter.DemoFilter
+microservice.demo.training21days.edge.filter.DemoAuthenticationFilter

@@ -25,6 +25,12 @@ cse:
     project: cn-north-1
     akskCustomCipher: default
 
+  metrics:
+    publisher:
+      defaultLog:
+        enabled: true  # 是否在默认的日志中打印metrics日志
+    window_time: 10000 # metrics日志打印周期
+
   http:
     dispatcher:
       edge:

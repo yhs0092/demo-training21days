@@ -30,6 +30,10 @@
       <groupId>com.huawei.paas.cse</groupId>
       <artifactId>cse-solution-service-engine</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.servicecomb</groupId>
+      <artifactId>metrics-core</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

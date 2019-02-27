@@ -8,8 +8,13 @@ import javax.ws.rs.QueryParam;
 import org.apache.servicecomb.provider.pojo.RpcReference;
 import org.apache.servicecomb.provider.rest.common.RestSchema;
 import org.apache.servicecomb.provider.springmvc.reference.RestTemplateBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import com.netflix.config.DynamicLongProperty;
+import com.netflix.config.DynamicPropertyFactory;
 
 import microservice.demo.training21days.provider.service.GreetingResponse;
 import microservice.demo.training21days.provider.service.HelloService;
@@ -18,6 +23,8 @@ import microservice.demo.training21days.provider.service.Person;
 @RestSchema(schemaId = "helloConsumer")
 @Path("/consumer/v0")  // 这里使用JAX-RS风格开发的consumer服务
 public class HelloConsumerService {
+  private static final Logger LOGGER = LoggerFactory.getLogger(HelloConsumerService.class);
+
   // RPC调用方式需要声明一个provider服务的REST接口代理
   @RpcReference(microserviceName = "provider", schemaId = "hello")
   private HelloService helloService;
@@ -25,10 +32,19 @@ public class HelloConsumerService {
   // RestTemplate调用方式需要创建一个 ServiceComb 的 RestTemplate
   private RestTemplate restTemplate = RestTemplateBuilder.create();
 
+  private DynamicLongProperty helloDelay = DynamicPropertyFactory.getInstance().getLongProperty("delay.sayHello", 0);
+
   @Path("/hello")
   @GET
   public String sayHello(@QueryParam("name") String name) {
     // RPC 调用方式体验与本地调用相同
+    if (helloDelay.get() > 0) {
+      try {
+        Thread.sleep(helloDelay.get());
+      } catch (InterruptedException e) {
+        LOGGER.error("sayHello sleeping is interrupted!", e);
+      }
+    }
     return helloService.sayHello(name);
   }
 

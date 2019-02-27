@@ -1,6 +1,8 @@
 package microservice.demo.training21days.provider.service;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.servicecomb.provider.rest.common.RestSchema;
@@ -29,9 +31,31 @@ public class HelloService {
     return () -> LOGGER.info("config[hello.sayHelloPrefix] changed to [{}]!", sayHelloPrefix.getValue());
   }
 
+// for microservice version 0.0.1
+//  @RequestMapping(path = "/hello/{name}", method = RequestMethod.GET)
+//  public String sayHello(@PathVariable(value = "name") String name) {
+//    return sayHelloPrefix.getValue() + name;
+//  }
+
+  // for microservice version 0.0.2
   @RequestMapping(path = "/hello/{name}", method = RequestMethod.GET)
   public String sayHello(@PathVariable(value = "name") String name) {
-    return sayHelloPrefix.getValue() + name;
+    return sayHelloPrefix.getValue() + name + ". " + generateGreeting();
+  }
+
+  private String generateGreeting() {
+    Calendar calendar = new GregorianCalendar();
+    int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+    if (hourOfDay < 12) {
+      return "Good morning.";
+    }
+    if (hourOfDay < 18) {
+      return "Good afternoon.";
+    }
+    if (hourOfDay < 22) {
+      return "Good evening.";
+    }
+    return "Good night.";
   }
 
   @PostMapping(path = "/greeting")

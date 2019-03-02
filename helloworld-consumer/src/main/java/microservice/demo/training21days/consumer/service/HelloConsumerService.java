@@ -1,5 +1,7 @@
 package microservice.demo.training21days.consumer.service;
 
+import java.util.concurrent.CompletableFuture;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,6 +20,7 @@ import com.netflix.config.DynamicPropertyFactory;
 
 import microservice.demo.training21days.provider.service.GreetingResponse;
 import microservice.demo.training21days.provider.service.HelloService;
+import microservice.demo.training21days.provider.service.HelloServiceReactive;
 import microservice.demo.training21days.provider.service.Person;
 
 @RestSchema(schemaId = "helloConsumer")
@@ -28,6 +31,9 @@ public class HelloConsumerService {
   // RPC调用方式需要声明一个provider服务的REST接口代理
   @RpcReference(microserviceName = "provider", schemaId = "hello")
   private HelloService helloService;
+
+  @RpcReference(microserviceName = "provider", schemaId = "hello")
+  private HelloServiceReactive helloServiceReactive;
 
   // RestTemplate调用方式需要创建一个 ServiceComb 的 RestTemplate
   private RestTemplate restTemplate = RestTemplateBuilder.create();
@@ -46,6 +52,12 @@ public class HelloConsumerService {
       }
     }
     return helloService.sayHello(name);
+  }
+
+  @Path("/helloReactive")
+  @GET
+  public CompletableFuture<String> helloReactive(@QueryParam("name") String name) {
+    return helloServiceReactive.sayHello(name);
   }
 
   @Path("/helloRT")

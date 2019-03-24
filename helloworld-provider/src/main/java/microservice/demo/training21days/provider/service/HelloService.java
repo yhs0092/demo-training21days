@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.netflix.config.DynamicLongProperty;
 import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.config.DynamicStringProperty;
 
@@ -31,6 +32,8 @@ public class HelloService {
     return () -> LOGGER.info("config[hello.sayHelloPrefix] changed to [{}]!", sayHelloPrefix.getValue());
   }
 
+  private DynamicLongProperty helloDelay = DynamicPropertyFactory.getInstance().getLongProperty("delay.sayHello", 0);
+
 // for microservice version 0.0.1
 //  @RequestMapping(path = "/hello/{name}", method = RequestMethod.GET)
 //  public String sayHello(@PathVariable(value = "name") String name) {
@@ -40,6 +43,13 @@ public class HelloService {
   // for microservice version 0.0.2
   @RequestMapping(path = "/hello/{name}", method = RequestMethod.GET)
   public String sayHello(@PathVariable(value = "name") String name) {
+    if (helloDelay.get() > 0) {
+      try {
+        Thread.sleep(helloDelay.get());
+      } catch (InterruptedException e) {
+        LOGGER.error("sayHello sleeping is interrupted!", e);
+      }
+    }
     return sayHelloPrefix.getValue() + name + ". " + generateGreeting();
   }
 

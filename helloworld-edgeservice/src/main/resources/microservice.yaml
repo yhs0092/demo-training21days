@@ -62,3 +62,7 @@ cse:
   accesslog:
     enabled: true
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+
+servicecomb:
+  request:
+    timeout: 15000

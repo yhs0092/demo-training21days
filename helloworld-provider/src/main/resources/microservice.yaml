@@ -45,3 +45,9 @@ cse:
 
 hello:
   sayHelloPrefix: "Hello "
+
+
+servicecomb:
+  rest:
+    server:
+      connection-limit: 1

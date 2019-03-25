@@ -19,6 +19,13 @@ cse:
   rest:
     address: 0.0.0.0:8000
 
+  handler:
+    chain:
+      Provider:
+        default: qps-flowcontrol-provider
+      Consumer:
+        default: qps-flowcontrol-consumer,loadbalance
+
   credentials:
     accessKey: your ak
     secretKey: your sk
@@ -64,5 +71,9 @@ cse:
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
 
 servicecomb:
+  rest:
+    client:
+      connection:
+        maxPoolSize: 1
   request:
     timeout: 15000

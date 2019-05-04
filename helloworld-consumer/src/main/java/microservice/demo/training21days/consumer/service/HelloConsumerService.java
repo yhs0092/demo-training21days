@@ -1,5 +1,7 @@
 package microservice.demo.training21days.consumer.service;
 
+import java.util.concurrent.CountDownLatch;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -8,16 +10,22 @@ import javax.ws.rs.QueryParam;
 import org.apache.servicecomb.provider.pojo.RpcReference;
 import org.apache.servicecomb.provider.rest.common.RestSchema;
 import org.apache.servicecomb.provider.springmvc.reference.RestTemplateBuilder;
+import org.apache.servicecomb.provider.springmvc.reference.async.CseAsyncRestTemplate;
+import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.netflix.config.DynamicLongProperty;
 import com.netflix.config.DynamicPropertyFactory;
 
 import microservice.demo.training21days.provider.service.GreetingResponse;
+import microservice.demo.training21days.provider.service.Hello;
 import microservice.demo.training21days.provider.service.HelloService;
+import microservice.demo.training21days.provider.service.NormalResponse;
 import microservice.demo.training21days.provider.service.Person;
 
 @RestSchema(schemaId = "helloConsumer")
@@ -62,5 +70,64 @@ public class HelloConsumerService {
   @POST
   public GreetingResponse greeting(Person person) {
     return helloService.greeting(person);
+  }
+
+  @RpcReference(microserviceName = "provider", schemaId = "hello2")
+  private Hello hello2;
+
+  private CseAsyncRestTemplate cseAsyncRestTemplate = new CseAsyncRestTemplate();
+
+  @Path("/testtest")
+  @GET
+  public String testtest() {
+    CountDownLatch countDownLatch = new CountDownLatch(1);
+    StringBuilder responseBuilder = new StringBuilder();
+
+//    hello2.deletex6().whenComplete((s, e) -> {
+//      responseBuilder.append(s);
+//      countDownLatch.countDown();
+//    });
+    ListenableFuture<ResponseEntity<String>> asyncResponseEntity = cseAsyncRestTemplate
+        .getForEntity("cse://provider/provider/v0/hello2/future/body", String.class);
+    asyncResponseEntity.addCallback(entity -> {
+      responseBuilder
+          .append(entity.getBody())
+          .append("-")
+          .append(entity.getStatusCode())
+          .append("-")
+          .append(entity.getHeaders().toString());
+      countDownLatch.countDown();
+    }, ex -> {
+      LOGGER.error("get failure!!!!", ex);
+      countDownLatch.countDown();
+    });
+    try {
+      countDownLatch.await();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    responseBuilder.append("-");
+    ResponseEntity<String> responseEntity = restTemplate
+        .getForEntity("cse://provider/provider/v0/hello2/future/body", String.class);
+    responseBuilder
+        .append(responseEntity.getBody())
+        .append("-")
+        .append(responseEntity.getStatusCode())
+        .append("-")
+        .append(responseEntity.getHeaders().toString());
+    return responseBuilder.toString();
+  }
+
+  @Path("testResponse")
+  @GET
+  public String testResponse(@QueryParam("code") int code) {
+    NormalResponse normalResponse = null;
+    try {
+      normalResponse = helloService.testResponse(code);
+    } catch (InvocationException e) {
+      System.out.println(e.toString());
+      return e.getErrorData().toString();
+    }
+    return normalResponse.toString();
   }
 }

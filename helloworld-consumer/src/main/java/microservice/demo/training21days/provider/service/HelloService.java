@@ -7,4 +7,6 @@ public interface HelloService {
   String sayHello(String name);
 
   GreetingResponse greeting(Person person);
+
+  NormalResponse testResponse(int code);
 }

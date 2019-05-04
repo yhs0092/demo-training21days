@@ -5,24 +5,29 @@ service_description:
 cse:
   service:
     registry:
-      address: https://cse.cn-north-1.myhuaweicloud.com:443
+      address: https://cse.cn-south-1.myhuaweicloud.com:443
       instance:
         watch: false
   config:
     client:
-      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+      serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
       refreshMode: 1
       refresh_interval: 5000
-  monitor:
-    client:
-      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+#  monitor:
+#    client:
+#      serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
   rest:
-    address: 0.0.0.0:8000
+    address: 0.0.0.0:8000 #?sslEnabled=true
+    client:
+      thread-count: 1
+      connection:
+        maxPoolSize: 200
+        idleTimeoutInSeconds: 120
 
   credentials:
     accessKey: your ak
     secretKey: your sk
-    project: cn-north-1
+    project: cn-south-1
     akskCustomCipher: default
 
   metrics:
@@ -61,4 +66,32 @@ cse:
 
   accesslog:
     enabled: true
-    pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+    pattern: "%h - - %t %r %s %B %D %SCB-traceId"
+
+#########SSL options
+ssl.rest.provider.protocols: TLSv1.2
+ssl.rest.provider.authPeer: false
+ssl.rest.consumer.authPeer: false
+ssl.rest.provider.checkCN.host: false
+ssl.rest.consumer.checkCN.host: false
+ssl.rest.consumer.ciphers: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_128_GCM_SHA256
+
+#########certificates config
+ssl.rest.provider.trustStore: trust.jks
+ssl.rest.provider.trustStoreType: JKS
+ssl.rest.provider.trustStoreValue: Changeme_123
+
+ssl.rest.provider.keyStore: server.p12
+ssl.rest.provider.keyStoreType: PKCS12
+ssl.rest.provider.keyStoreValue: Changeme_123
+
+ssl.rest.consumer.keyStore: server.p12
+ssl.rest.consumer.keyStoreType: PKCS12
+ssl.rest.consumer.keyStoreValue: Changeme_123
+
+ssl.rest.consumer.trustStore: trust.jks
+ssl.rest.consumer.trustStoreType: JKS
+ssl.rest.consumer.trustStoreValue: Changeme_123
+
+ssl.rest.consumer.sslCustomClass: microservice.demo.training21days.edge.tls.DemoSSLCustom
+ssl.rest.provider.sslCustomClass: microservice.demo.training21days.edge.tls.DemoSSLCustom

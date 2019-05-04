@@ -6,16 +6,23 @@ import java.util.GregorianCalendar;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.servicecomb.provider.rest.common.RestSchema;
+import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.netflix.config.DynamicLongProperty;
 import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.config.DynamicStringProperty;
+
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestSchema(schemaId = "hello")        // 该注解声明这是一个REST接口类，CSEJavaSDK会扫描到这个类，根据它的代码生成接口契约
 @RequestMapping(path = "/provider/v0") // @RequestMapping是Spring的注解，这里在使用Spring MVC风格开发REST接口
@@ -31,6 +38,7 @@ public class HelloService {
     return () -> LOGGER.info("config[hello.sayHelloPrefix] changed to [{}]!", sayHelloPrefix.getValue());
   }
 
+  private DynamicLongProperty helloDelay = DynamicPropertyFactory.getInstance().getLongProperty("delay.sayHello", 0);
 // for microservice version 0.0.1
 //  @RequestMapping(path = "/hello/{name}", method = RequestMethod.GET)
 //  public String sayHello(@PathVariable(value = "name") String name) {
@@ -60,6 +68,13 @@ public class HelloService {
 
   @PostMapping(path = "/greeting")
   public GreetingResponse greeting(@RequestBody Person person) {
+    if (helloDelay.get() > 0) {
+      try {
+        Thread.sleep(helloDelay.get());
+      } catch (InterruptedException e) {
+        LOGGER.warn("failed to delay", e);
+      }
+    }
     if (StringUtils.isEmpty(person.getName()) || null == person.getGender()) {
       throw new IllegalArgumentException("Lack of property");
     }
@@ -73,5 +88,22 @@ public class HelloService {
     greetingResponse.setTimestamp(new Date());
 
     return greetingResponse;
+  }
+
+  @ApiResponses(value = {
+      @ApiResponse(code = 500, message = "test error", response = ErrorResponse.class)
+  })
+  @GetMapping(path = "testResponse")
+  public NormalResponse testResponse(@RequestParam(name = "code") int code) {
+    if (0 == code) {
+      NormalResponse normalResponse = new NormalResponse();
+      normalResponse.setMsg("OK");
+      return normalResponse;
+    }
+
+    ErrorResponse errorData = new ErrorResponse();
+    errorData.setCode(code);
+    errorData.setErrMsg("Not OK");
+    throw new InvocationException(500, "Custom Error", errorData);
   }
 }

@@ -6,19 +6,19 @@ service_description:
 cse:
   service:
     registry:
-      address: https://cse.cn-north-1.myhuaweicloud.com:443
+      address: https://cse.cn-south-1.myhuaweicloud.com:443
       instance:
         watch: false        # 使用pull模式连接服务中心
   config:
     client:
-      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+      serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
       refreshMode: 1        # 使用pull模式连接配置中心
       refresh_interval: 5000
-  monitor:                  # 只有从本地接入云上CSE时需要配置monitor地址，云上集群部署时可以通过服务发现接入monitor
-    client:
-      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+#  monitor:                  # 只有从本地接入云上CSE时需要配置monitor地址，云上集群部署时可以通过服务发现接入monitor
+#    client:
+#      serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
   rest:
-    address: 0.0.0.0:8080   # 本服务监听的地址
+    address: 0.0.0.0:8080 #?sslEnabled=true
 
   # 处理链配置
   handler:
@@ -30,18 +30,56 @@ cse:
   credentials:
     accessKey: your ak   # 配置你的AK
     secretKey: your sk   # 配置你的SK
-    project: cn-north-1  # 这里的值与sc/cc/monitor的地址相对应，如果配置的是域名，CSEJavaSDK可以自动截取出project
+    project: cn-south-1  # 这里的值与sc/cc/monitor的地址相对应，如果配置的是域名，CSEJavaSDK可以自动截取出project
     akskCustomCipher: default
 
   accesslog:
-    enabled: true
+    enabled: false
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
 
   metrics:
     publisher:
       defaultLog:
-        enabled: true  # 是否在默认的日志中打印metrics日志
+        enabled: false  # 是否在默认的日志中打印metrics日志
     window_time: 10000 # metrics日志打印周期
 
 hello:
   sayHelloPrefix: "Hello "
+
+servicecomb:
+  executor:
+    default:
+      thread-per-group: 100
+      group: 2
+  rest:
+    server:
+      thread-count: 2
+
+
+#########SSL options
+ssl.rest.provider.protocols: TLSv1.2
+ssl.rest.provider.authPeer: false
+ssl.rest.consumer.authPeer: false
+ssl.rest.provider.checkCN.host: false
+ssl.rest.consumer.checkCN.host: false
+ssl.rest.consumer.ciphers: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_128_GCM_SHA256
+
+#########certificates config
+ssl.rest.provider.trustStore: trust.jks
+ssl.rest.provider.trustStoreType: JKS
+ssl.rest.provider.trustStoreValue: Changeme_123
+
+ssl.rest.provider.keyStore: server.p12
+ssl.rest.provider.keyStoreType: PKCS12
+ssl.rest.provider.keyStoreValue: Changeme_123
+
+ssl.rest.consumer.keyStore: server.p12
+ssl.rest.consumer.keyStoreType: PKCS12
+ssl.rest.consumer.keyStoreValue: Changeme_123
+
+ssl.rest.consumer.trustStore: trust.jks
+ssl.rest.consumer.trustStoreType: JKS
+ssl.rest.consumer.trustStoreValue: Changeme_123
+
+ssl.rest.consumer.sslCustomClass: microservice.demo.training21days.provider.tls.DemoSSLCustom
+ssl.rest.provider.sslCustomClass: microservice.demo.training21days.provider.tls.DemoSSLCustom

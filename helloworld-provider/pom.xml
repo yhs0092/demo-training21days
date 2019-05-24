@@ -9,7 +9,7 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
-    <cse.version>2.3.62</cse.version>
+    <cse.version>2.3.69</cse.version>
     <main.class>microservice.demo.training21days.provider.AppMain</main.class>
   </properties>
 

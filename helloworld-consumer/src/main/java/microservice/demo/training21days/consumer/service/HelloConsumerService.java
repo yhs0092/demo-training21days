@@ -63,4 +63,10 @@ public class HelloConsumerService {
   public GreetingResponse greeting(Person person) {
     return helloService.greeting(person);
   }
+
+  @Path(("/greetingRT"))
+  @POST
+  public GreetingResponse greetingRT(Person person) {
+    return restTemplate.postForObject("cse://provider/provider/v0/greeting", person, GreetingResponse.class);
+  }
 }

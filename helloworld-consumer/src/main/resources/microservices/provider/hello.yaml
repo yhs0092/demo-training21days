@@ -1,0 +1,82 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  # title: "swagger definition for microservice.demo.training21days.provider.service.HelloService"
+  # x-java-interface: "cse.gen.Training21Days_HelloWorld.provider.hello.HelloServiceIntf"
+basePath: "/provider/v0"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /greeting:
+    post:
+      operationId: "greeting"
+      parameters:
+        - in: "body"
+          name: "person"
+          required: true
+          schema:
+            $ref: "#/definitions/Person"
+      responses:
+        200:
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/GreetingResponse"
+  /redirect:
+    get:
+      operationId: "redirect"
+      parameters:
+        - name: "jump"
+          in: "query"
+          required: true
+          type: "boolean"
+      responses:
+        200:
+          description: "response of 200"
+          schema:
+            type: "string"
+        302:
+          description: "response of 302"
+          headers:
+            Location:
+              type: "string"
+          schema:
+            type: "string"
+  /hello/{name}:
+    get:
+      operationId: "sayHello"
+      parameters:
+        - name: "name"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "response of 200"
+          schema:
+            type: "string"
+definitions:
+  Person:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      gender:
+        type: "string"
+        enum:
+          - "MALE"
+          - "FEMALE"
+      extra:
+        type: "string"
+  GreetingResponse:
+    type: "object"
+    properties:
+      msg:
+        type: "string"
+      timestamp:
+        type: "string"
+        format: "date-time"
+      extra:
+        type: "string"

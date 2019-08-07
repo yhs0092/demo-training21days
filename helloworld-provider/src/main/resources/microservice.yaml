@@ -8,14 +8,15 @@ cse:
       address: https://cse.cn-north-1.myhuaweicloud.com:443
       instance:
         watch: false        # 使用pull模式连接服务中心
-  config:
-    client:
-      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
-      refreshMode: 1        # 使用pull模式连接配置中心
-      refresh_interval: 5000
+#  config:
+#    client:
+#      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+#      refreshMode: 1        # 使用pull模式连接配置中心
+#      refresh_interval: 5000
   monitor:                  # 只有从本地接入云上CSE时需要配置monitor地址，云上集群部署时可以通过服务发现接入monitor
     client:
       serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+      enabled: false
   rest:
     address: 0.0.0.0:8080   # 本服务监听的地址
 
@@ -27,8 +28,14 @@ cse:
     akskCustomCipher: default
 
   accesslog:
-    enabled: true
+    enabled: false
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+
+  metrics:
+    window_time: 60000
+    publisher:
+      defaultLog:
+        enabled: true
 
 hello:
   sayHelloPrefix: "Hello "

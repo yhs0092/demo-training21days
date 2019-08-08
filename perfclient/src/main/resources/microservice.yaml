@@ -23,15 +23,26 @@ cse:
   #  accesslog:
   #    enabled: false
   #    pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+  handler:
+    chain:
+      Provider:
+        default: ""
+      Consumer:
+        default: simpleLB
+  credentials:
+    accessKey: your ak
+    secretKey: your sk
+    project: cn-north-1
+    akskCustomCipher: default
 
   metrics:
     window_time: 10000
     invocation.latencyDistribution: 0,1,3,10,100
     Consumer.invocation.slow:
-      enabled: true
+      enabled: false
       msTime: 1000
     Provider.invocation.slow:
-      enabled: true
+      enabled: false
       msTime: 1000
     publisher.defaultLog:
       enabled: true
@@ -43,8 +54,8 @@ servicecomb:
   executor:
     default:
       group: 2
-      coreThreads-per-group: 100
-      maxThreads-per-group: 100
+      coreThreads-per-group: 1
+      maxThreads-per-group: 1
   rest:
     server:
       verticle-count: 1
@@ -52,20 +63,14 @@ servicecomb:
     client:
       verticle-count: 2
       connection:
-        maxPoolSize: 10
+        maxPoolSize: 20
         compression: false
-
-  credentials:
-    accessKey: your ak
-    secretKey: your sk
-    project: cn-north-1
-    akskCustomCipher: default
 
 # targetMethod available:
 # edge.hello/edge.hello.reactive/consumer.hello/consumer.hello.reactive/edge.greeting/edge.greeting.reactive/consumer.greeting/consumer.greeting.reactive
 
 perf:
-  targetMethod: "consumer.greeting"
+  targetMethod: "consumer.greeting.reactive"
   targetAddress: "rest://127.0.0.1:9090" # comma separated for multiple addresses
   concurrency: 20
   sayHelloParam: "abcd"

@@ -31,14 +31,21 @@ cse:
     enabled: false
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
 
+  handler:
+    chain:
+      Provider:
+        default: ""
+      Consumer:
+        default: loadbalance
+
   metrics:
     window_time: 10000
     invocation.latencyDistribution: 0,1,3,10,100
     Consumer.invocation.slow:
-      enabled: true
+      enabled: false
       msTime: 1000
     Provider.invocation.slow:
-      enabled: true
+      enabled: false
       msTime: 1000
     publisher.defaultLog:
       enabled: true

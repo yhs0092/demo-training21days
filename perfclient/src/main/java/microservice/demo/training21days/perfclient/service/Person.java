@@ -1,4 +1,4 @@
-package microservice.demo.training21days.provider.service;
+package microservice.demo.training21days.perfclient.service;
 
 public class Person {
   private String name;

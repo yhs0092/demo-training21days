@@ -8,5 +8,5 @@ public interface HelloServiceReactive {
   // 参数顺序与provider服务契约中定义的顺序保持一致
   CompletableFuture<String> sayHello(String name);
 
-  CompletableFuture<GreetingResponse> greeting(Person person);
+  CompletableFuture<Person> greeting(Person person);
 }

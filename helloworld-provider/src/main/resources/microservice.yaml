@@ -32,10 +32,32 @@ cse:
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
 
   metrics:
-    window_time: 60000
-    publisher:
-      defaultLog:
-        enabled: true
+    window_time: 10000
+    invocation.latencyDistribution: 0,1,3,10,100
+    Consumer.invocation.slow:
+      enabled: true
+      msTime: 1000
+    Provider.invocation.slow:
+      enabled: true
+      msTime: 1000
+    publisher.defaultLog:
+      enabled: true
+      endpoints.client.detail.enabled: true
+      invocation.latencyDistribution:
+        minScopeLength: 9
 
-hello:
-  sayHelloPrefix: "Hello "
+servicecomb:
+  executor:
+    default:
+      group: 2
+      coreThreads-per-group: 100
+      maxThreads-per-group: 100
+  rest:
+    server:
+      verticle-count: 1
+      compression: false
+    client:
+      verticle-count: 1
+      connection:
+        maxPoolSize: 10
+        compression: false

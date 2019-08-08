@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>microservice.demo.training21days</groupId>
-  <artifactId>helloworld-edgeservice</artifactId>
+  <artifactId>perfclient</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
     <cse.version>2.3.69</cse.version>
-    <main.class>microservice.demo.training21days.edge.AppMain</main.class>
+    <main.class>microservice.demo.training21days.perfclient.AppMain</main.class>
   </properties>
 
   <dependencyManagement>
@@ -29,10 +29,6 @@
     <dependency>
       <groupId>com.huawei.paas.cse</groupId>
       <artifactId>cse-solution-service-engine</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.servicecomb</groupId>
-      <artifactId>edge-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.servicecomb</groupId>

@@ -6,5 +6,5 @@ public interface HelloService {
   // 参数顺序与provider服务契约中定义的顺序保持一致
   String sayHello(String name);
 
-  GreetingResponse greeting(Person person);
+  Person greeting(Person person);
 }

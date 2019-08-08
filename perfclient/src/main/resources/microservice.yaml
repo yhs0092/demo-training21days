@@ -1,6 +1,6 @@
 APPLICATION_ID: Training21Days-HelloWorld
 service_description:
-  name: consumer
+  name: perfclient
   version: 0.0.1
 cse:
   service:
@@ -8,21 +8,21 @@ cse:
       address: https://cse.cn-north-1.myhuaweicloud.com:443
       instance:
         watch: false
-#  config:
-#    client:
-#      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
-#      refreshMode: 1
-#      refresh_interval: 5000
+  #  config:
+  #    client:
+  #      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+  #      refreshMode: 1
+  #      refresh_interval: 5000
   monitor:
     client:
       serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
       enabled: false
-  rest:
-    address: 0.0.0.0:9090
+  #  rest:
+  #    address: 0.0.0.0:19090
 
-  accesslog:
-    enabled: false
-    pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+  #  accesslog:
+  #    enabled: false
+  #    pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
 
   metrics:
     window_time: 10000
@@ -50,7 +50,7 @@ servicecomb:
       verticle-count: 1
       compression: false
     client:
-      verticle-count: 1
+      verticle-count: 2
       connection:
         maxPoolSize: 10
         compression: false
@@ -60,3 +60,13 @@ servicecomb:
     secretKey: your sk
     project: cn-north-1
     akskCustomCipher: default
+
+# targetMethod available:
+# edge.hello/edge.hello.reactive/consumer.hello/consumer.hello.reactive/edge.greeting/edge.greeting.reactive/consumer.greeting/consumer.greeting.reactive
+
+perf:
+  targetMethod: "consumer.greeting"
+  targetAddress: "rest://127.0.0.1:9090" # comma separated for multiple addresses
+  concurrency: 20
+  sayHelloParam: "abcd"
+  greetingParam: "{\"name\":\"abcd\",\"index\":1}"

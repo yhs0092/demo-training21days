@@ -10,11 +10,21 @@
 
   <properties>
     <cse.version>2.3.73</cse.version>
+    <org.apache.servicecomb.version>1.3.0-SNAPSHOT</org.apache.servicecomb.version>
     <main.class>microservice.demo.training21days.provider.AppMain</main.class>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <!-- servicecomb -->
+      <dependency>
+        <groupId>org.apache.servicecomb</groupId>
+        <artifactId>java-chassis-dependencies</artifactId>
+        <version>${org.apache.servicecomb.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
       <dependency>
         <groupId>com.huawei.paas.cse</groupId>
         <artifactId>cse-dependency</artifactId>

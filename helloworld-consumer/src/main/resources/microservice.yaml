@@ -16,6 +16,7 @@ cse:
   monitor:
     client:
       serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+      enabled: false
   rest:
     address: 0.0.0.0:9090
 
@@ -28,3 +29,6 @@ cse:
     secretKey: your sk
     project: cn-north-1
     akskCustomCipher: default
+
+servicecomb.rest.servlet.urlPattern: /helloworld_consumer_war/*
+servicecomb.service.registry.registerUrlPrefix: true

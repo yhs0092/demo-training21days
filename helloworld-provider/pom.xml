@@ -10,7 +10,7 @@
 
   <properties>
     <cse.version>2.3.73</cse.version>
-    <org.apache.servicecomb.version>1.3.0-SNAPSHOT</org.apache.servicecomb.version>
+    <org.apache.servicecomb.version>2.0.0-SNAPSHOT</org.apache.servicecomb.version>
     <main.class>microservice.demo.training21days.provider.AppMain</main.class>
   </properties>
 

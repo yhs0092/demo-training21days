@@ -14,7 +14,7 @@ import io.vertx.core.http.HttpClientOptions;
 public class AppMain {
   public static void main(String[] args) throws Exception {
     final ArrayList<IpPort> ipPorts = new ArrayList<>();
-    final HttpClientOptions httpClientOptions = new HttpClientPool(null).createHttpClientOptions();
+    final HttpClientOptions httpClientOptions = new HttpClientPool(null, null).createHttpClientOptions();
     httpClientOptions.setSsl(false);
     ipPorts.add(new IpPort("127.0.0.1", 30100));
     RegistryUtils.addExtraServiceRegistryConfig(new ServiceRegistryConfig()

@@ -6,14 +6,15 @@ service_description:
 cse:
   service:
     registry:
-      address: https://cse.cn-south-1.myhuaweicloud.com:443
+      #      address: https://cse.cn-south-1.myhuaweicloud.com:443
+      address: https://127.0.0.1:30000
       instance:
         watch: false        # 使用pull模式连接服务中心
-  config:
-    client:
-      serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
-      refreshMode: 1        # 使用pull模式连接配置中心
-      refresh_interval: 5000
+  #  config:
+  #    client:
+  #      serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
+  #      refreshMode: 1        # 使用pull模式连接配置中心
+  #      refresh_interval: 5000
   monitor:                  # 只有从本地接入云上CSE时需要配置monitor地址，云上集群部署时可以通过服务发现接入monitor
     client:
       serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
@@ -40,3 +41,18 @@ cse:
 
 hello:
   sayHelloPrefix: "Hello "
+
+#########SSL options
+ssl.sc.consumer.protocols: TLSv1.2
+ssl.sc.consumer.authPeer: true
+ssl.sc.consumer.checkCN.host: false
+
+#########certificates config
+ssl.sc.consumer.trustStore: trust.jks
+ssl.sc.consumer.trustStoreType: JKS
+ssl.sc.consumer.trustStoreValue: "aaaaaa"
+ssl.sc.consumer.keyStore: server.p12
+ssl.sc.consumer.keyStoreType: PKCS12
+ssl.sc.consumer.keyStoreValue: "aaaaaa"
+ssl.sc.consumer.crl: revoke.crl
+ssl.sc.consumer.sslCustomClass: microservice.demo.training21days.tls.DemoSSLCustomN0

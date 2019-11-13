@@ -5,16 +5,15 @@ service_description:
 cse:
   service:
     registry:
-      address: https://cse.cn-south-1.myhuaweicloud.com:443
+      #      address: https://cse.cn-south-1.myhuaweicloud.com:443
+      address: https://127.0.0.1:30200
       instance:
-        pull:
-          interval: 2
         watch: false
-  config:
-    client:
-      serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
-      refreshMode: 1
-      refresh_interval: 5000
+  #  config:
+  #    client:
+  #      serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
+  #      refreshMode: 1
+  #      refresh_interval: 5000
   monitor:
     client:
       serverUri: https://cse.cn-south-1.myhuaweicloud.com:443
@@ -59,3 +58,19 @@ cse:
   accesslog:
     enabled: false
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+
+
+#########SSL options
+ssl.sc.consumer.protocols: TLSv1.2
+ssl.sc.consumer.authPeer: true
+ssl.sc.consumer.checkCN.host: false
+
+#########certificates config
+ssl.sc.consumer.trustStore: trust.jks
+ssl.sc.consumer.trustStoreType: JKS
+ssl.sc.consumer.trustStoreValue: "aaaaaa"
+ssl.sc.consumer.keyStore: server.p12
+ssl.sc.consumer.keyStoreType: PKCS12
+ssl.sc.consumer.keyStoreValue: "aaaaaa"
+ssl.sc.consumer.crl: revoke.crl
+ssl.sc.consumer.sslCustomClass: microservice.demo.training21days.tls.DemoSSLCustomN1

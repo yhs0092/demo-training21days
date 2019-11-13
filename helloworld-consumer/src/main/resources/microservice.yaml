@@ -6,7 +6,7 @@ cse:
   service:
     registry:
 #      address: https://cse.cn-south-1.myhuaweicloud.com:443
-      address: http://127.0.0.1:30100
+      address: https://127.0.0.1:30000
       instance:
         watch: false
 #  config:
@@ -30,3 +30,19 @@ cse:
     secretKey: your sk
     project: cn-south-1
     akskCustomCipher: default
+
+
+#########SSL options
+ssl.sc.consumer.protocols: TLSv1.2
+ssl.sc.consumer.authPeer: true
+ssl.sc.consumer.checkCN.host: false
+
+#########certificates config
+ssl.sc.consumer.trustStore: trust.jks
+ssl.sc.consumer.trustStoreType: JKS
+ssl.sc.consumer.trustStoreValue: "aaaaaa"
+ssl.sc.consumer.keyStore: server.p12
+ssl.sc.consumer.keyStoreType: PKCS12
+ssl.sc.consumer.keyStoreValue: "aaaaaa"
+ssl.sc.consumer.crl: revoke.crl
+ssl.sc.consumer.sslCustomClass: microservice.demo.training21days.tls.DemoSSLCustomN0

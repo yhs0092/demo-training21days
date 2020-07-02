@@ -34,8 +34,13 @@ cse:
     akskCustomCipher: default
 
   accesslog:
-    enabled: true
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+
+servicecomb:
+  metrics:
+    publisher:
+      defaultLog:
+        enabled: false
 
 hello:
   sayHelloPrefix: "Hello "

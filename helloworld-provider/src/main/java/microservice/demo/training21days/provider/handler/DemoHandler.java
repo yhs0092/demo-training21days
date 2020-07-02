@@ -15,7 +15,7 @@ public class DemoHandler implements Handler {
     String operationName = invocation.getOperationMeta().getMicroserviceQualifiedName();
     // 这里我们只检查sayHello方法的参数
     if ("provider.hello.sayHello".equals(operationName)) {
-      Object name = invocation.getSwaggerArgument(0);
+      Object name = invocation.getSwaggerArgument("name");
       // 如果name=stranger，则拒绝请求，返回403
       if (!"true".equalsIgnoreCase(invocation.getContext("LetStrangerPass"))
           && "stranger".equalsIgnoreCase((String) name)) {

@@ -9,16 +9,20 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
-    <cse.version>2.3.73</cse.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <java-chassis-dependencies.version>2.0.0</java-chassis-dependencies.version>
+    <cse.version>2.5.0</cse.version>
     <main.class>microservice.demo.training21days.consumer.AppMain</main.class>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.huawei.paas.cse</groupId>
-        <artifactId>cse-dependency</artifactId>
-        <version>${cse.version}</version>
+        <groupId>org.apache.servicecomb</groupId>
+        <artifactId>java-chassis-dependencies</artifactId>
+        <version>${java-chassis-dependencies.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -27,8 +31,17 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.apache.servicecomb</groupId>
+      <artifactId>solution-basic</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.servicecomb</groupId>
+      <artifactId>config-cc</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.huawei.paas.cse</groupId>
-      <artifactId>cse-solution-service-engine</artifactId>
+      <artifactId>foundation-auth</artifactId>
+      <version>${cse.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.servicecomb</groupId>
@@ -44,9 +57,9 @@
         <version>3.1</version>
         <configuration>
           <compilerArgument>-parameters</compilerArgument>
-          <encoding>UTF-8</encoding>
-          <source>1.8</source>
-          <target>1.8</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
         </configuration>
       </plugin>
       <plugin>

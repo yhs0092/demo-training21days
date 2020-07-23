@@ -21,12 +21,12 @@ import microservice.demo.training21days.provider.service.HelloService;
 import microservice.demo.training21days.provider.service.Person;
 
 @RestSchema(schemaId = "helloConsumer")
-@Path("/consumer/v0")  // 这里使用JAX-RS风格开发的consumer服务
+@Path("/demo-consumer/v0")  // 这里使用JAX-RS风格开发的consumer服务
 public class HelloConsumerService {
   private static final Logger LOGGER = LoggerFactory.getLogger(HelloConsumerService.class);
 
   // RPC调用方式需要声明一个provider服务的REST接口代理
-  @RpcReference(microserviceName = "provider", schemaId = "hello")
+  @RpcReference(microserviceName = "hello-service", schemaId = "hello")
   private HelloService helloService;
 
   // RestTemplate调用方式需要创建一个 ServiceComb 的 RestTemplate
@@ -54,7 +54,7 @@ public class HelloConsumerService {
     // RestTemplate 使用方式与原生的Spring RestTemplate相同，可以直接参考原生Spring的资料
     // 注意URL不是 http://{IP}:{port} ， 而是 cse://{provider端服务名} ， 其他部分如path/query等与原生调用方式一致
     ResponseEntity<String> responseEntity =
-        restTemplate.getForEntity("cse://provider/provider/v0/hello/" + name, String.class);
+        restTemplate.getForEntity("cse://hello-service/hello-service/v0/hello/" + name, String.class);
     return responseEntity.getBody();
   }
 

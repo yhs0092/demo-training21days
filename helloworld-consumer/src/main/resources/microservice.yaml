@@ -1,6 +1,6 @@
-APPLICATION_ID: Training21Days-HelloWorld
+APPLICATION_ID: HelloWorld
 service_description:
-  name: consumer
+  name: demo-consumer
   version: 0.0.1
 servicecomb:
   service:

@@ -1,4 +1,4 @@
-APPLICATION_ID: Training21Days-HelloWorld
+APPLICATION_ID: HelloWorld
 service_description:
   name: edge
   version: 0.0.1
@@ -46,12 +46,12 @@ servicecomb:
 #            providerV0:                  # 定义名为providerV0的映射规则
 #              prefixSegmentCount: 1      # 前缀长度为1，例如接到url为/hello/provider/v0/hello/Bob的请求，截去第一段发给provider
 #              path: "/hello/.*"          # 映射规则匹配请求url的正则表达式
-#              microserviceName: provider # 映射规则对应转发的后端微服务
+#              microserviceName: hello-service # 映射规则对应转发的后端微服务
 #              versionRule: 0.0.0-1.0.0   # 匹配的微服务版本范围，大于或等于0.0.0，小于1.0.0
 #            consumerV0:
 #              prefixSegmentCount: 1
 #              path: "/client/.*"
-#              microserviceName: consumer
+#              microserviceName: demo-consumer
 #              versionRule: 0.0.0-1.0.0
 
   accesslog:

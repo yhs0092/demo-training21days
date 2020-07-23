@@ -2,9 +2,10 @@ APPLICATION_ID: Training21Days-HelloWorld
 service_description:
   name: consumer
   version: 0.0.1
-cse:
+servicecomb:
   service:
     registry:
+      enabled: true
       address: https://cse.cn-north-1.myhuaweicloud.com:443
       instance:
         watch: false
@@ -28,7 +29,6 @@ cse:
     project: cn-north-1
     akskCustomCipher: default
 
-servicecomb:
   metrics:
     publisher:
       defaultLog:

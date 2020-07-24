@@ -20,11 +20,11 @@ servicecomb:
   rest:
     address: 0.0.0.0:8000
 
-  credentials:
-    accessKey: your ak
-    secretKey: your sk
-    project: cn-north-1
-    akskCustomCipher: default
+#  credentials:
+#    accessKey: your ak
+#    secretKey: your sk
+#    project: cn-north-1
+#    akskCustomCipher: default
 
   http:
     dispatcher:

@@ -29,11 +29,11 @@ servicecomb:
         default: demo-handler,qps-flowcontrol-provider,bizkeeper-provider
 
   # 本地连接华为云时需要配置AK/SK，如果是在云上ServiceStage部署则不需要。直接删掉credentials配置即可
-  credentials:
-    accessKey: your ak   # 配置你的AK
-    secretKey: your sk   # 配置你的SK
-    project: cn-north-1  # 这里的值与sc/cc/monitor的地址相对应，如果配置的是域名，CSEJavaSDK可以自动截取出project
-    akskCustomCipher: default
+  #  credentials:
+  #    accessKey: your ak   # 配置你的AK
+  #    secretKey: your sk   # 配置你的SK
+  #    project: cn-north-1  # 这里的值与sc/cc/monitor的地址相对应，如果配置的是域名，CSEJavaSDK可以自动截取出project
+  #    akskCustomCipher: default
 
   accesslog:
     enabled: true # 开启accesslog，打印服务端接收请求记录

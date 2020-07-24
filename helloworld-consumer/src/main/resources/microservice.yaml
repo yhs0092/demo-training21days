@@ -24,11 +24,11 @@ servicecomb:
     enabled: true
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
 
-  credentials:
-    accessKey: your ak
-    secretKey: your sk
-    project: cn-north-1
-    akskCustomCipher: default
+#  credentials:
+#    accessKey: your ak
+#    secretKey: your sk
+#    project: cn-north-1
+#    akskCustomCipher: default
 
   metrics:
     publisher:

@@ -55,6 +55,7 @@ servicecomb:
 #              versionRule: 0.0.0-1.0.0
 
   accesslog:
+    enabled: true
     pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
 
   metrics:

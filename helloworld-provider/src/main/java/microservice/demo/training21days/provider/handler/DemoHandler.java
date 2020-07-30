@@ -14,7 +14,7 @@ public class DemoHandler implements Handler {
     // 从这里可以取出本次请求调用的方法的完整名字，格式是 serviceName.schemaId.operationId
     String operationName = invocation.getOperationMeta().getMicroserviceQualifiedName();
     // 这里我们只检查sayHello方法的参数
-    if ("provider.hello.sayHello".equals(operationName)) {
+    if ("hello-service.hello.sayHello".equals(operationName)) {
       Object name = invocation.getSwaggerArgument("name");
       // 如果name=stranger，则拒绝请求，返回403
       if (!"true".equalsIgnoreCase(invocation.getContext("LetStrangerPass"))
